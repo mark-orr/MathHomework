@@ -25,17 +25,17 @@ for i in range(0,200):
     print(' \n')
 
 '''FIXED DATA STRUCTURES'''
-arr_multiplier = np.array([1,2,3,4,5,6,7,8,9,10,11,12])
+#arr_multiplier = np.array([1,2,3,4,5,6,7,8,9,10,11,12])
 
 '''DEFS'''
-def generate_table(base,multiplier):
+""" def generate_table(base,multiplier):
     '''
     base is the times table the kid wants
     multiplier is a np.array (1d) of 1...12
     '''
-    return [i for i in base*multiplier]
+    return [i for i in base*multiplier] """
 
-def play_game(table_kind,multiplicand,turns):
+def play_game(turns):
     '''
     See above for some inputs
     '''
@@ -43,14 +43,19 @@ def play_game(table_kind,multiplicand,turns):
     start_time = time.time()
     tally = []
     for i in range(0,turns):
-        multiplier = random.randint(1,12)
-        print(multiplier,' X ',table_kind, ' = ???')
+        minuend = random.randint(2,18)
+        #print('minuend: ',minuend)
+        subtrahend = random.randint(1,minuend-1)
+        #print('subtrahend: ',subtrahend)
+        answer = minuend - subtrahend
+        print(minuend,' - ',subtrahend, ' = ???')
         user_guess = int(input())
-        if user_guess == multiplicand[multiplier-1]:
+        if user_guess == answer:
             print('CORRECT! \n')
             tally.append(1)
         else: 
-            print('INCORRECT, DUMB DUMB! \n')
+            print('INCORRECT, DUMB DUMB!')
+            print('The correct answer is: ',minuend,' - ',subtrahend, ' = ',answer,' \n')
             tally.append(0)
     # End timer
     end_time = time.time()
@@ -74,14 +79,15 @@ def main_game():
     game_on = input("Would You Like to Play a Game? (Y/N) \n")
 
     if game_on == "Y":
-        table_kind = int(input("What Times Table Do You Want? (2 to infinity) \n"))
+        engine.say("We will Play Subtraction Game. Ok?"); engine.runAndWait()
+        table_kind = input("We will Play Subtraction Game. Ok? (Y/N) \n")
         #make table
-        arr_multiplicand = generate_table(table_kind,arr_multiplier)
+        #arr_multiplicand = generate_table(table_kind,arr_multiplier)
         #gather number of turns
         num_turns = int(input("How Many Turns Do You Want? \n"))
         print('\n')
         #NOW INDEX IS MATCHED FOR multiplier and multiplicand   
-        catch = play_game(table_kind,arr_multiplicand,num_turns)
+        catch = play_game(num_turns)
 
 
     elif user_input == "N":
@@ -89,7 +95,8 @@ def main_game():
         exit()
 
     else:
-        print("You entered an invalid option.\nExiting.")
+        for i in range(0,10):
+            print("You entered an invalid option.\nExiting.")
         exit()
     
     for i in range(0,10):
